@@ -1,0 +1,16 @@
+<routes xmlns="http://camel.apache.org/schema/spring">
+    <restConfiguration contextPath="{{esb.microroute.api.path}}"
+                       port="{{server.port}}"
+                       enableCORS="true"
+                       apiContextPath="/api-doc"
+                       apiContextRouteId="doc-api"
+                       component="servlet"
+                       bindingMode="json"/>
+    <route id="rest-to-kafka-route">
+        <from uri="rest:post:/api/bean"/>
+        <setHeader name="servIdTEST2">
+            <spel>#{T(java.util.UUID).randomUUID().toString()}</spel>
+        </setHeader>
+        <log message="log:service1"/>
+    </route>
+</routes>
